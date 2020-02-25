@@ -27,11 +27,19 @@ public class RxCreate extends HttpServlet {
 			throws ServletException, IOException {
 
 		
-		String doctor= "SELECT dr_id WHERE first_name = ? AND last_name = ?";
-		
-		String patient= "SELECT patient_id WHERE first_name = ? AND last_name = ?\n";
-		
-		String pharm_id = "SELECT pharmacy_id WHERE name LIKE “%?%”";
+		String sql = "SELECT dr.first_name, dr.last_name, pa.first_name, pa.last_name, pharmacy, drug_id, "
+			+ "patient_id, dr_id, pharmacy_id FROM prescription pres JOIN drug dg ON pres.drug_id=dg.drug_id"
+			+ "JOIN patient pa ON pres.patient_id = pa.patient_id "
+			+ "JOIN doctor dr ON pres.dr_id = dr.dr_id"
+			+ "JOIN pharmacy ph ON pres.pharmacy_id = ph.pharmacy_id"
+			+ "WHERE dr.first_name = ?"
+			+ "AND dr.last_name = ?"
+			+ "AND pa.first_name = ?"
+			+ "AND pa.last_name = ?"
+			+ "AND drug_id = ?"
+			+ "AND refill = ?"
+			+ "AND quantity = ?"
+			+ "AND pharmacy = ?"; 
 		
 		String usql = "INSERT INTO prescription (refill, date, quantity, drug_id, patient_id, dr_id, pharmacy_id)"
 			+ "VALUES (?, date, ?, ?, patient_id, dr_id, pharmacy_id)";
