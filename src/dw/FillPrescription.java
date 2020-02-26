@@ -26,6 +26,10 @@ public class FillPrescription extends HttpServlet {
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
       
+      String sqlCheckFilled = "SELECT is_filled \n" + 
+         "FROM prescription\n" + 
+         "WHERE prescription_id = 500;";
+      
       String usql = 
          "UPDATE prescription\n" + 
          "SET is_filled = 1,\n" + 
@@ -51,6 +55,9 @@ public class FillPrescription extends HttpServlet {
       try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
          conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
          conn.setAutoCommit(false); 
+         
+         // Check if this prescription is already filled
+         
 
          // prepare statement to update the prescription
          PreparedStatement pstmt =  conn.prepareStatement(usql);
@@ -67,12 +74,17 @@ public class FillPrescription extends HttpServlet {
          ResultSet rs = pstmt.executeQuery();
          
 
-         out.println("<!DOCTYPE HTML><html><body>");
+         // Start HTML code and styling
+         out.println("<!DOCTYPE HTML><head><link rel=\"stylesheet\" href=\"search.css\"><html><body><div class=\"container\" style=\"width:100%; color:white;\">");
          out.println("  <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css\""
             + " integrity=\"sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh\" crossorigin=\"anonymous\">");
          out.println("  <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">");
          out.println("<link rel=\"stylesheet\" href=\"search.css\">");
          
+         // Create Page header 
+         out.println("<h3><br/> Confirmation - Prescription Filled <br/></h3>");
+         
+         // Create table headers 
          out.println("<table align =\"center\">");
          out.println("<tr><th>Patient ID</th>");
          out.println("<th>Prescription ID</th> ");
@@ -94,8 +106,8 @@ public class FillPrescription extends HttpServlet {
             }
             out.println("</tr>");
          }
-         out.println("</table>");
-         out.println("</body></html>");
+         out.println("</table><br/>");
+         out.println("</div></body></head></html>");
 
          rs.close();
          conn.commit();
