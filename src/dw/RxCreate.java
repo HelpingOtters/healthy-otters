@@ -43,30 +43,7 @@ public class RxCreate extends HttpServlet {
 			"AND quantity = ?\n" + 
 			"AND pres.pharmacy_id = ?\n" + 
 			"AND pres.patient_id = ? \n" + 
-			"AND pres.dr_id = ?;\n" + 
-			"            \n" + 
-			"SELECT prescription_id AS \"Prescription Number\", \n" + 
-			"date AS \"Date\", \n" + 
-			"CONCAT(pa.first_name,\", \", pa.last_name) AS \"Patient\",\n" + 
-			"dg.trade_name AS \"Drug Name\", \n" + 
-			"quantity AS \"Quantity\",\n" + 
-			"refill AS \"Refills Allowed\", \n" + 
-			"CONCAT(dr.first_name,\",\",dr.last_name) AS \"Doctor\", \n" + 
-			"ph.name AS \"Pharmacy\"\n" + 
-			"FROM prescription pres\n" + 
-			"JOIN drug dg \n" + 
-			"ON pres.drug_id = dg.drug_id\n" + 
-			"JOIN patient pa \n" + 
-			"ON pres.patient_id = pa.patient_id\n" + 
-			"JOIN doctor dr \n" + 
-			"ON pres.dr_id = dr.dr_id\n" + 
-			"JOIN pharmacy ph \n" + 
-			"ON pres.pharmacy_id = ph.pharmacy_id\n" + 
-			"WHERE prescription_id = (SELECT last_insert_id());";
-			
-			
-		
-		
+			"AND pres.dr_id = ?;";
 		
 
 		response.setContentType("text/html"); // Set response content type
