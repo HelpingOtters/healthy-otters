@@ -27,31 +27,27 @@ public class FillPrescription extends HttpServlet {
       throws ServletException, IOException {
       
 
-      /**
       String usql = "START TRANSACTION; " + 
          "UPDATE prescription " + 
          "SET is_filled = 1, " + 
          "number_of_refills = (number_of_refills + 1) " + 
          "WHERE patient_id = ? " + 
          "AND prescription_id = ?; " +
-         "COMMIT";
-         */
+         "COMMIT;";
       
+      /**
       String usql = 
-         "UPDATE prescription " + 
-         "SET is_filled = 1, " + 
-         "WHERE patient_id = ? " + 
-         "AND prescription_id = ?; ";
-      
+         "UPDATE prescription SET is_filled = 1, WHERE patient_id = ? AND prescription_id = ?;";
+      */
       String sql = "SELECT patient_id, prescription_id, trade_name, " + 
          "    is_filled " + 
          "FROM patient JOIN prescription USING (patient_id) " + 
-         "    JOIN drug USING (drug_id) " + 
-         "WHERE patient_id = ?" +
-         "AND prescription_id = ?";
+         "    JOIN drug USING (drug_id) " +
+         "AND prescription_id = ?;";
+     
       
-      String prescriptionID = request.getParameter("pres_id");
-      String patientID = request.getParameter("patient_id");
+      String prescriptionID = request.getParameter("pres_id").trim();
+      String patientID = request.getParameter("patient_id").trim();
       
       System.out.println("prescription ID: " + prescriptionID);
 

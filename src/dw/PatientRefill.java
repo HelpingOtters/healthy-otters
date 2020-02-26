@@ -38,8 +38,8 @@ public class PatientRefill extends HttpServlet {
       response.setContentType("text/html"); // Set response content type
       PrintWriter out = response.getWriter();
       
-      String prescriptionID = request.getParameter("pres_id");
-      String patientID = request.getParameter("patient_id");
+      String prescriptionID = request.getParameter("pres_id").trim();
+      String patientID = request.getParameter("patient_id").trim();
       
       if(prescriptionID != "" && patientID != "") {
          try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
@@ -91,8 +91,8 @@ public class PatientRefill extends HttpServlet {
             // HTML code for the "fill" prescription button
             out.println("<form action = \"FillPrescription\" method = \"POST\">");
             out.println("<button align=\"center\" type=\"submit\" class=\"btn btn-primary\" style=\"margin:2em 0 1.8em 0; width:50%;\" >Fill Prescription</button>");
-            out.println("<input type=\"hidden\" name=\"pres_id\" value=" + prescriptionID + "/>"); 
-            out.println("<input type=\"hidden\" name=\"patient_id\" value=" + patientID + "/>"); 
+            out.println("<input type=\"hidden\" name=\"pres_id\" value=" + prescriptionID + ">");
+            out.println("<input type=\"hidden\" name=\"patient_id\" value=" + patientID + ">");
             
             out.println("</form>");
             out.println("</body></html>");
