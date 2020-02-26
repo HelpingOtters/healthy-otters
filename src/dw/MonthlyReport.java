@@ -28,23 +28,24 @@ public class MonthlyReport extends HttpServlet {
 
 
 		String sql =  "SELECT dg.trade_name, SUM(quantity) AS \"sold\"\r\n" + 
-				"from prescription pres join drug dg\r\n" + 
-				"	on pres.drug_id = dg.drug_id\r\n" + 
-				"WHERE pres.date BETWEEN DATE_SUB(curdate(), INTERVAL 1 MONTH) AND curdate()\r\n" + 
-				"AND pharmacy_id = ?\r\n" + 
-				"group by dg.trade_name;";
+				"FROM prescription pres JOIN drug dg\r\n" + 
+				"		ON pres.drug_id = dg.drug_id\r\n" + 
+				"WHERE pres.date BETWEEN DATE_SUB(CURDATE(), INTERVAL 1 MONTH) AND \r\n" + 
+				"CURDATE()\r\n" + 
+				"AND pharmacy_id = (SELECT pharmacy_id FROM pharmacy WHERE name LIKE ?)\r\n" + 
+				"GROUP BY dg.trade_name;";
 
 		response.setContentType("text/html"); // Set response content type
 		PrintWriter out = response.getWriter();
 
-		String pharmacy_id = request.getParameter("pharmacy_id");
+		String name = request.getParameter("name");
 
-		if(pharmacy_id != "") {
+		if(name != "") {
 			try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
 
 				//Prepare Select
 				PreparedStatement pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, pharmacy_id);
+				pstmt.setString(1, name);
 				ResultSet rs = pstmt.executeQuery();
 
 				//Start html output
@@ -54,7 +55,7 @@ public class MonthlyReport extends HttpServlet {
 				out.println("	<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">");
 				out.println("<link rel=\"stylesheet\" href=\"search.css\">");
 
-				out.println("<p align = \"center\"> Pharmacy: " + pharmacy_id + "</p>\n");
+				out.println("<p align = \"center\"> Pharmacy: " + name + "</p>\n");
 
 
 				//Table Headers
