@@ -21,7 +21,7 @@ public class PatientRefill extends HttpServlet {
 
    // Database credentials.  COMPLETE THE FOLLOWING STATEMENTS
    static final String USER = "root";
-   static final String PASS = "Fbcjapan1!";
+   static final String PASS = "Bandit0!";
 
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {

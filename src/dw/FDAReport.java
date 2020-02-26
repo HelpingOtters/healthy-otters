@@ -21,7 +21,7 @@ public class FDAReport extends HttpServlet {
 
 	// Database credentials.  COMPLETE THE FOLLOWING STATEMENTS
 	static final String USER = "root";
-	static final String PASS = "@DevDan2020";
+	static final String PASS = "Bandit0!";
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
