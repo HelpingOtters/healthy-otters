@@ -1,55 +1,55 @@
 @charset "UTF-8";
 
 .container {
-	padding: 0 auto;
-	text-align: center;
-	border-style: solid;
-	background-color: #004A6D;
-	opacity: 0.9;
-	border-radius: 50px;
-	margin: 5em auto ;
+   padding: 0 auto;
+   text-align: center;
+   border-style: solid;
+   background-color: #004A6D;
+   opacity: 0.9;
+   border-radius: 50px;
+   margin: 5em auto ;
 }
 
 body {
-	background-image: url('medical.jpeg');
+   background-image: url('medical.jpeg');
 }
 
 h1 {
-	color: black;
-	text-align: center;
-	width: 100%;
-	height:100%;
-	display:inline-block;
-	margin: 0.8em auto;
-	background-color: #95C8FE;
-	border-radius: 5px;
-	
-	
-	
+   color: black;
+   text-align: center;
+   width: 100%;
+   height:100%;
+   display:inline-block;
+   margin: 0.8em auto;
+   background-color: #95C8FE;
+   border-radius: 5px;
+   
+   
+   
 }
 
 h4 {
-	color: black;
-	text-align: center;
-	width: 100%;
-	height:100%;
-	display:inline-block;
-	margin: 0.3em auto;
-	border-radius: 5px;
-	background-color: #95C8FE;
+   color: black;
+   text-align: center;
+   width: 100%;
+   height:100%;
+   display:inline-block;
+   margin: 0.3em auto;
+   border-radius: 5px;
+   background-color: #95C8FE;
 }
 
 h5 {
-	color: white;
-	text-align: center;
-	width: 100%;
-	height:100%;
-	display:inline-block;
-	margin: 0.3em auto;
-	border-radius: 5px;
-	
-	
-	
+   color: white;
+   text-align: center;
+   width: 100%;
+   height:100%;
+   display:inline-block;
+   margin: 0.3em auto;
+   border-radius: 5px;
+   
+   
+   
 }
 
 * {
