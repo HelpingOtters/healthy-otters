@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="search.css">
+	
+	
+
+	<body>
+	<div class="container" style="width:100%; color:white;">
+		<h1 style="background-color: transparent; color:white;">Patient Rx Refill</h1>
+	
+		<form  action = "RxCreate" method = "POST">
+			<h5 style="width:40%; text-align:center; align:center; display:inline-block;">Prescription ID</h5> <input type="text" name="pres_id" /> <br />
+			<h5 style="width:40%; text-align:center; align:center; display:inline-block;">Pharmacy Name</h5> <input type="text" name="pharmacy" /> <br />
+		
+			
+			
+			
+			<button type="submit" class="btn btn-primary" style="margin:2em 0 1.8em 0; width:50%;" value="submit" >Fill Rx</button>
+		</form>
+	</div>
+	</body>
+</head>
+</html>
