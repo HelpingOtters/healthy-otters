@@ -27,6 +27,7 @@ public class FillPrescription extends HttpServlet {
       throws ServletException, IOException {
       
 
+      /**
       String usql = "START TRANSACTION; " + 
          "UPDATE prescription " + 
          "SET is_filled = 1, " + 
@@ -34,25 +35,25 @@ public class FillPrescription extends HttpServlet {
          "WHERE patient_id = ? " + 
          "AND prescription_id = ?; " +
          "COMMIT";
+         */
       
-      String usql2 = "UPDATE prescription " + 
-         "SET is_filled = 0, " + 
-         "number_of_refills = number_of_refills + 1 " + 
+      String usql = 
+         "UPDATE prescription " + 
+         "SET is_filled = 1, " + 
          "WHERE patient_id = ? " + 
-         "AND prescription_id = ? ";
+         "AND prescription_id = ?; ";
       
       String sql = "SELECT patient_id, prescription_id, trade_name, " + 
          "    is_filled " + 
          "FROM patient JOIN prescription USING (patient_id) " + 
          "    JOIN drug USING (drug_id) " + 
-         "WHERE patient_id = ?";
+         "WHERE patient_id = ?" +
+         "AND prescription_id = ?";
       
-      //String prescriptionID = request.getParameter("pres_id");
-      //String patientID = request.getParameter("patient_id");
+      String prescriptionID = request.getParameter("pres_id");
+      String patientID = request.getParameter("patient_id");
       
-      int prescriptionID = Integer.parseInt(request.getParameter("pres_id"));
-      int patientID = Integer.parseInt(request.getParameter("patient_id"));
-
+      System.out.println("prescription ID: " + prescriptionID);
 
       response.setContentType("text/html"); // Set response content type
       PrintWriter out = response.getWriter();
@@ -62,22 +63,28 @@ public class FillPrescription extends HttpServlet {
          conn.setAutoCommit(false); 
 
          // prepare statement to update the prescription
-         PreparedStatement pstmt =  conn.prepareStatement(usql2);
+         PreparedStatement pstmt =  conn.prepareStatement(usql);
          // SET VALUES FOR PARAMETER MARKERS 
-         pstmt.setInt(1, patientID);
-         pstmt.setInt(2, prescriptionID);
-         
+         pstmt.setString(1, patientID);
+         pstmt.setString(2, prescriptionID);
          pstmt.executeUpdate();
-         
+
          // prepare select statement to confirm prescription
          pstmt =  conn.prepareStatement(sql);
          // SET VALUES FOR PARAMETER MARKERS 
-         pstmt.setInt(1, patientID);
+         pstmt.setString(1, patientID);
+         pstmt.setString(2, prescriptionID);
          ResultSet rs = pstmt.executeQuery();
          
 
          out.println("<!DOCTYPE HTML><html><body>");
-         out.println("<table> <tr><th>Patient ID</th>");
+         out.println("  <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css\""
+            + " integrity=\"sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh\" crossorigin=\"anonymous\">");
+         out.println("  <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">");
+         out.println("<link rel=\"stylesheet\" href=\"search.css\">");
+         
+         out.println("<table align =\"center\">");
+         out.println("<tr><th>Patient ID</th>");
          out.println("<th>Prescription ID</th> ");
          out.println("<th>Trade Name</th> ");
          out.println("<th>Rx Filled</th></tr>");
@@ -99,7 +106,7 @@ public class FillPrescription extends HttpServlet {
          }
          out.println("</table>");
          out.println("</body></html>");
-         
+
          rs.close();
          conn.commit();
          
