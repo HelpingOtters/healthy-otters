@@ -26,25 +26,33 @@ public class RxCreate extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String isql = "INSERT INTO prescription (refill, quantity, drug_id, patient_id, dr_id, pharmacy_id)"
-			+ "VALUES (?, ?, ?, ?, ?, ?);";
 		
-		String sql = "SELECT dr.first_name, dr.last_name, pa.first_name, pa.last_name, ph.name, pres.drug_id\n" + 
+		String sql = "SELECT dr.first_name, dr.last_name, pa.first_name, pa.last_name, ph.name, pres.drug_id, \n" + 
+			"pres.patient_id, pres.dr_id, pres.pharmacy_id \n" + 
 			"FROM prescription pres JOIN drug dg ON pres.drug_id=dg.drug_id\n" + 
-			"JOIN patient pa ON pres.patient_id = pa.patient_id\n" + 
+			"JOIN patient pa ON pres.patient_id = pa.patient_id \n" + 
 			"JOIN doctor dr ON pres.dr_id = dr.dr_id\n" + 
-			"JOIN pharmacy ph ON pres.pharmacy_id = ph.pharmacy_id\n" + 
-			"WHERE dr.first_name = ?\n" + 
+			"JOIN pharmacy ph ON pres.pharmacy_id = ph.pharmacy_id WHERE dr.first_name = ?\n" + 
 			"AND dr.last_name = ?\n" + 
 			"AND pa.first_name = ?\n" + 
-			"AND pa.last_name = ? \n" + 
-			"AND pres.drug_id = ?\n" + 
-			"AND refill = ? \n" + 
+			"AND pa.last_name = ?\n" + 
+			"AND drug_id = ?\n" + 
+			"AND refill = ?\n" + 
 			"AND quantity = ?\n" + 
+<<<<<<< HEAD
 			"AND pres.pharmacy_id = ?\n" + 
 			"AND pres.patient_id = ? \n" + 
 			"AND pres.dr_id = ?;";
 		
+=======
+			"AND pharmacy_id = ?" +
+			"AND patient_id = ?" +
+			"AND dr_id = ?";
+			
+		
+		String isql = "INSERT INTO prescription (refill, quantity, drug_id, patient_id, dr_id, pharmacy_id)"
+			+ "VALUES (?, ?, ?, ?, ?, ?)";
+>>>>>>> parent of e27ef2c... editeed createRx
 
 		response.setContentType("text/html"); // Set response content type
 		PrintWriter out = response.getWriter();
@@ -73,7 +81,7 @@ public class RxCreate extends HttpServlet {
 			pstmt.setInt(2, quantity);
 			pstmt.setInt(3, drug_id);
 			pstmt.setInt(4, patient_id);
-			pstmt.setInt(5, dr_id);
+			pstmt.setInt(5,  dr_id);
 			pstmt.setInt(6, pharm_id);
 			int row_count = pstmt.executeUpdate();
 			
@@ -90,9 +98,8 @@ public class RxCreate extends HttpServlet {
 			pstmt.setInt(9, patient_id);
 			pstmt.setInt(10, dr_id);
 			ResultSet rs = pstmt.executeQuery();
-		
 
-			out.println("<!DOCTYPE HTML><head><link rel=\"stylesheet\" href=\"search.css\"><html><body><div class=\"container\" style=\"width:100%; color:white;\">");
+			out.println("<!DOCTYPE HTML><html><body>");
 			out.println("<p>Rows updated = " + row_count + "</p>");
 			out.println("<table> <tr><th>Doctor First Name</th> <tr><th>Doctor Last Name</th> <th>Patient First Name</th> "
 				+ "<th>Patient Last Name</th> <th>Drug ID</th> <th>Number of Refills</th>"
@@ -114,7 +121,7 @@ public class RxCreate extends HttpServlet {
 			
 			rs.close();
 			out.println("</table>");
-			out.println("</div></body></head></html>");
+			out.println("</body></html>");
 			conn.commit();
 		} catch (SQLException e) {
 			// Handle errors
