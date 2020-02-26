@@ -28,14 +28,15 @@ public class FDAReport extends HttpServlet {
 
 
 		String sql =  "SELECT dr.first_name, dr.last_name, generic_name,\r\n" + 
-					  "	  SUM(quantity) AS Quantity_Prescribed\r\n" + 
-					  "FROM doctor dr JOIN prescription pres\r\n" + 
-					  "	ON dr.dr_id = pres.dr_id\r\n" + 
-					  "JOIN drug dg\r\n" + 
-					  "	ON pres.drug_id = dg.drug_id\r\n" + 
-					  "WHERE pres.date BETWEEN DATE_SUB(curdate(), INTERVAL 6 MONTH) AND \r\n" + 
-					  "curdate()\r\n" + 
-					  "GROUP BY first_name, last_name, generic_name;";
+				"	  SUM(quantity) AS Quantity_Prescribed\r\n" + 
+				"FROM doctor dr JOIN prescription pres\r\n" + 
+				"	ON dr.dr_id = pres.dr_id\r\n" + 
+				"JOIN drug dg\r\n" + 
+				"	ON pres.drug_id = dg.drug_id\r\n" + 
+				"WHERE pres.date BETWEEN DATE_SUB(curdate(), INTERVAL 6 MONTH) AND \r\n" + 
+				"curdate()\r\n" + 
+				"GROUP BY first_name, last_name, generic_name\r\n" + 
+				"ORDER BY first_name, last_name, generic_name;";
 
 		response.setContentType("text/html"); // Set response content type
 		PrintWriter out = response.getWriter();
@@ -83,7 +84,7 @@ public class FDAReport extends HttpServlet {
 				rs.close();
 				out.println("</table>");
 				out.println("</body></html>");
-				conn.commit();
+		
 
 
 			} catch (SQLException e) {

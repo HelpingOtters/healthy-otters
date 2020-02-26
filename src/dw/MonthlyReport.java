@@ -76,7 +76,7 @@ public class MonthlyReport extends HttpServlet {
 				rs.close();
 				out.println("</table>");
 				out.println("</body></html>");
-				conn.commit();
+				
 
 
 			} catch (SQLException e) {
