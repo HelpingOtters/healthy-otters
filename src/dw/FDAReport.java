@@ -52,7 +52,7 @@ public class FDAReport extends HttpServlet {
 				ResultSet rs = pstmt.executeQuery();
 
 				//Start html output
-				out.println("<!DOCTYPE HTML><head><link rel=\"stylesheet\" href=\"search.css\"><html><body><div class=\"container\" style=\"width:100% color:white\">");
+				out.println("<!DOCTYPE HTML><html><body>");
 				out.println("	<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css\""
 						+ " integrity=\"sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh\" crossorigin=\"anonymous\">");
 				out.println("	<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">");
@@ -68,7 +68,7 @@ public class FDAReport extends HttpServlet {
 				out.println("<th>First Name</th>");
 				out.println("<th>Last Name</th>");
 				out.println("<th>Drug Name (Generic)</th>");
-				out.println("<th>Quantity Prescribed</th>");
+				out.println("<th>Quantity Prescripbed</th>");
 
 				//creates rows with data for each row from the result set
 				while(rs.next()) {
@@ -83,7 +83,7 @@ public class FDAReport extends HttpServlet {
 
 				rs.close();
 				out.println("</table>");
-				out.println("<div><body><head><html>");
+				out.println("</body></html>");
 		
 
 
