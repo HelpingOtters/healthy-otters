@@ -30,16 +30,28 @@ public class FillPrescription extends HttpServlet {
       String usql = "START TRANSACTION; " + 
          "UPDATE prescription " + 
          "SET is_filled = 1, " + 
+         "number_of_refills = (number_of_refills + 1) " + 
+         "WHERE patient_id = ? " + 
+         "AND prescription_id = ?; " +
+         "COMMIT";
+      
+      String usql2 = "UPDATE prescription " + 
+         "SET is_filled = 0, " + 
          "number_of_refills = number_of_refills + 1 " + 
          "WHERE patient_id = ? " + 
-         "AND prescription_id = ?; " + 
-         "COMMIT";
+         "AND prescription_id = ? ";
       
       String sql = "SELECT patient_id, prescription_id, trade_name, " + 
          "    is_filled " + 
          "FROM patient JOIN prescription USING (patient_id) " + 
          "    JOIN drug USING (drug_id) " + 
          "WHERE patient_id = ?";
+      
+      //String prescriptionID = request.getParameter("pres_id");
+      //String patientID = request.getParameter("patient_id");
+      
+      int prescriptionID = Integer.parseInt(request.getParameter("pres_id"));
+      int patientID = Integer.parseInt(request.getParameter("patient_id"));
 
 
       response.setContentType("text/html"); // Set response content type
@@ -49,20 +61,18 @@ public class FillPrescription extends HttpServlet {
          conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
          conn.setAutoCommit(false); 
 
-         String prescriptionID = request.getParameter("pres_id");
-         String patientID = request.getParameter("patient_id");
-
          // prepare statement to update the prescription
-         PreparedStatement pstmt =  conn.prepareStatement(usql);
+         PreparedStatement pstmt =  conn.prepareStatement(usql2);
          // SET VALUES FOR PARAMETER MARKERS 
-         pstmt.setString(1, patientID);
-         pstmt.setString(2, prescriptionID);
+         pstmt.setInt(1, patientID);
+         pstmt.setInt(2, prescriptionID);
+         
          pstmt.executeUpdate();
          
          // prepare select statement to confirm prescription
          pstmt =  conn.prepareStatement(sql);
          // SET VALUES FOR PARAMETER MARKERS 
-         pstmt.setString(1, patientID);
+         pstmt.setInt(1, patientID);
          ResultSet rs = pstmt.executeQuery();
          
 
