@@ -57,7 +57,7 @@ public class MonthlyReport extends HttpServlet {
 
 
 			//Table Headers
-			out.println("<table>");
+			out.println("<table align =\"center\">");
 			out.println("<tr>");	
 			//out.println("<th>Date</th>");
 			out.println("<th>Drug Name</th>");
@@ -67,8 +67,8 @@ public class MonthlyReport extends HttpServlet {
 			while(rs.next()) {
 				out.println("<tr>");
 				//out.println("<td>" + rs.getString("date") + "</td>");
-				out.println("<td>" + rs.getString("trade_name") + "</td>");
-				out.println("<td>" + rs.getString("sold") + "</td>");
+				out.println("<td align =\"left\">" + rs.getString("trade_name") + "</td>");
+				out.println("<td align =\"center\">" + rs.getString("sold") + "</td>");
 				out.println("</tr>");
 			}
 
