@@ -26,8 +26,6 @@ public class PatientRefill extends HttpServlet {
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-
-
       String sqlGetPresCost = "SELECT prescription_id, price, is_filled " + 
          "FROM prescription pres JOIN drug_price dp " + 
          "WHERE pres.pharmacy_id = dp.pharmacy_id " + 
@@ -55,7 +53,7 @@ public class PatientRefill extends HttpServlet {
 
 
             // Create the html page to display result set 
-            out.println("<!DOCTYPE HTML><html><body>");
+            out.println("<!DOCTYPE HTML><head><link rel=\"stylesheet\" href=\"search.css\"><html><body><div class=\"container\" style=\"width:100%; color:white;\">");
             out.println("  <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css\""
                   + " integrity=\"sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh\" crossorigin=\"anonymous\">");
             out.println("  <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">");
@@ -90,12 +88,12 @@ public class PatientRefill extends HttpServlet {
             
             // HTML code for the "fill" prescription button
             out.println("<form action = \"FillPrescription\" method = \"POST\">");
-            out.println("<button align=\"center\" type=\"submit\" class=\"btn btn-primary\" style=\"margin:2em 0 1.8em 0; width:50%;\" >Fill Prescription</button>");
+            out.println("<button align=\"left\" type=\"submit\" class=\"btn btn-primary\" style=\"margin:2em 0 1.8em 0; width:50%;\" >Fill Prescription</button>");
             out.println("<input type=\"hidden\" name=\"pres_id\" value=" + prescriptionID + ">");
             out.println("<input type=\"hidden\" name=\"patient_id\" value=" + patientID + ">");
             
             out.println("</form>");
-            out.println("</body></html>");
+            out.println("</div></body></head></html>");
             
             conn.commit();
             
